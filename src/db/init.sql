@@ -1,0 +1,10 @@
+
+CREATE DATABASE IF NOT EXISTS user_management;
+CREATE TABLE IF NOT EXISTS users (
+    id VARCHAR(150) PRIMARY KEY,
+    name VARCHAR(200) NOT NULL,
+    email VARCHAR(200) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL, 
+    role ENUM('admin','user') DEFAULT 'user' NOT NULL,
+    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
