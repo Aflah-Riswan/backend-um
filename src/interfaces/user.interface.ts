@@ -17,7 +17,7 @@ export interface UserResponse {
   isBlocked: boolean;
   createdAt: Date;
 }
-export type UpdateUserDTO = Partial<Pick<User, "name" | "email" | "password">>;
+export type UpdateUserDTO = Partial<Pick<User, "name" | "email" | "role">>;
 export interface IUserRepo {
   findByEmail(email: string): Promise<User | null>;
   findById(id: string): Promise<User | null>;
@@ -36,5 +36,5 @@ export interface IUserRepo {
     password: string,
     role: UserRole,
   ): Promise<UserResponse>;
-  updateBlockStatus(id : string : isBlocked: boolean) : Promise < void>
+  updateBlockStatus(id : string , isBlocked: boolean) : Promise < void>
 }

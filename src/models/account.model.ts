@@ -23,15 +23,22 @@ export abstract class Accounts implements Omit<User, "password"> {
   public abstract canManageUsers(): boolean;
 }
 
+export class CustomerAccount extends Accounts {
+  public readonly role: UserRole = "user";
+  public canManageUsers(): boolean {
+    return false;
+  }
+}
+
 export class AdminAccount extends Accounts {
   public readonly role: UserRole = "admin";
   public canManageUsers(): boolean {
     return true;
   }
-  public toggleTargetBlock (target : Accounts , status : boolean) : void {
-    if(target.id === this.id){
-        throw new Error(" admin cant block himself")
+  public toggleTargetBlock(target: Accounts, status: boolean): void {
+    if (target.id === this.id) {
+      throw new Error(" admin cant block himself");
     }
-   (target as any).setBlockState(status)
+    (target as any).setBlockState(status);
   }
 }
