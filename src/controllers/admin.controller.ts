@@ -15,7 +15,7 @@ export class AdminController {
 
   async update(req: Request, res: Response): Promise<void> {
     try {
-      await this.adminService.updateUserInfo(req.params.id, req.body);
+      await this.adminService.updateUserInfo(req.params.id as string, req.body);
       res.status(200).json({ success: true, message: "Profile elements updated successfully." });
     } catch (err: any) {
       res.status(400).json({ error: err.message });
