@@ -4,20 +4,20 @@ import { pool } from "../utils/db.utils.js";
 
 export class UserRepository implements IUserRepo {
   async findById(id: string): Promise<User | null> {
-    const query = "SELECT id, name, email, password, role, createdAt FROM users WHERE id = ? LIMIT 1";
+    const query = "SELECT id, name, email, password, role, createdAt,isBlocked FROM users WHERE id = ? LIMIT 1";
     const [rows] = await pool.execute<RowDataPacket[]>(query, [id]);
     if (rows.length === 0) return null;
     return rows[0] as User;
   }
 
   async findByEmail(email: string): Promise<User | null> {
-    const query = "SELECT id, name, email, password, role, createdAt FROM users WHERE email = ? LIMIT 1";
+    const query = "SELECT id, name, email, password, role, createdAt , isBlocked FROM users WHERE email = ? LIMIT 1";
     const [rows] = await pool.execute<RowDataPacket[]>(query, [email]);
     if (rows.length === 0) return null;
     return rows[0] as User;
   }
   async create(id: string, name: string, email: string, password: string, role: UserRole): Promise<UserResponse> {
-    const query = "INSERT INTO users (id, name, email, password, role) VALUES (?, ?, ?, ?, ?)";
+    const query = "INSERT INTO users (id, name, email, password, role ) VALUES (?, ?, ?, ?, ?)";
     await pool.execute<ResultSetHeader>(query, [id, name, email, password, role]);
     return { id, name, email, role, isBlocked: false, createdAt: new Date() };
   }

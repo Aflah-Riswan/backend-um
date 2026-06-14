@@ -5,12 +5,7 @@ import jwt from "jsonwebtoken";
 
 export class UserService {
   constructor(private userRepo: IUserRepo) {}
-  async registerUser(
-    name: string,
-    email: string,
-    password: string,
-    role: UserRole = "user",
-  ) {
+  async registerUser(name: string, email: string, password: string, role: UserRole = "user") {
     const existingUser = await this.userRepo.findByEmail(email);
     if (existingUser) {
       throw new Error(" user with this email is already exist");
@@ -23,21 +18,22 @@ export class UserService {
 
   async loginUser(email: string, password: string) {
     const user = await this.userRepo.findByEmail(email);
-    console.log(user)
+    console.log(user);
     if (!user) {
       throw new Error("Invalid Email or Password");
     }
+
+    if (user.isBlocked) {
+      throw new Error("Access Denied: Your account has been suspended by an administrator.");
+    }
+
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
       throw new Error(" INvalid email or password");
     }
-    
-    const token = jwt.sign(
-      { id: user.id, email: user.email, role: user.role },
-      process.env.JWT_SECRET || "fallback_secret_key",
-      { expiresIn: "1d" }
-    );
-    
-    return  { user , token}
+
+    const token = jwt.sign({ id: user.id, email: user.email, role: user.role }, process.env.JWT_SECRET || "fallback_secret_key", { expiresIn: "1d" });
+
+    return { user, token };
   }
 }
