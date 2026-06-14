@@ -5,7 +5,7 @@ export interface User {
   name: string;
   email: string;
   password: string;
-  isBlocked : boolean;
+  isBlocked: boolean;
   role: UserRole;
   createdAt: Date;
 }
@@ -14,11 +14,21 @@ export interface UserResponse {
   name: string;
   email: string;
   role: UserRole;
-  isBlocked : boolean;
+  isBlocked: boolean;
   createdAt: Date;
 }
+export type UpdateUserDTO = Partial<Pick<User, "name" | "email" | "password">>;
 export interface IUserRepo {
   findByEmail(email: string): Promise<User | null>;
+  findById(id: string): Promise<User | null>;
+  findAll(): Promise<User[]>;
+  update(
+    id: string,
+    name: string,
+    email: string,
+    role: UserRole,
+  ): Promise<void>;
+  delete(id: string): Promise<void>;
   create(
     id: string,
     name: string,
@@ -26,4 +36,5 @@ export interface IUserRepo {
     password: string,
     role: UserRole,
   ): Promise<UserResponse>;
+  updateBlockStatus(id : string : isBlocked: boolean) : Promise < void>
 }
