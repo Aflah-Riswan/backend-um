@@ -23,6 +23,7 @@ export class UserService {
 
   async loginUser(email: string, password: string) {
     const user = await this.userRepo.findByEmail(email);
+    console.log(user)
     if (!user) {
       throw new Error("Invalid Email or Password");
     }
@@ -30,11 +31,13 @@ export class UserService {
     if (!isPasswordValid) {
       throw new Error(" INvalid email or password");
     }
+    
     const token = jwt.sign(
       { id: user.id, email: user.email, role: user.role },
       process.env.JWT_SECRET || "fallback_secret_key",
       { expiresIn: "1d" }
     );
+    
     return  { user , token}
   }
 }

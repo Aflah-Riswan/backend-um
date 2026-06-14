@@ -5,6 +5,7 @@ export interface User {
   name: string;
   email: string;
   password: string;
+  isBlocked : boolean;
   role: UserRole;
   createdAt: Date;
 }
@@ -13,6 +14,7 @@ export interface UserResponse {
   name: string;
   email: string;
   role: UserRole;
+  isBlocked : boolean;
   createdAt: Date;
 }
 export interface IUserRepo {

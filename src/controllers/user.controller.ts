@@ -30,6 +30,7 @@ export class UserController {
   async login (req : Request , res : Response) : Promise<void> {
    try {
     const { email , password} = req.body
+    console.log(email , password)
     if(!email || !password ){
         throw new Error(" email and password are required")
     }
