@@ -1,10 +1,10 @@
 import { error } from "node:console";
 import { UserService } from "../services/user.services.js";
 import { Request, Response } from "express";
-import { UserRole } from "../interfaces/user.interface.js";
+import { IUserService, UserRole } from "../interfaces/user.interface.js";
 
 export class UserController {
-  constructor(private userService: UserService) {}
+  constructor(private userService: IUserService) {}
   async register(req: Request, res: Response): Promise<void> {
     try {
     

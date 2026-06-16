@@ -38,3 +38,8 @@ export interface IUserRepo {
   ): Promise<UserResponse>;
   updateBlockStatus(id : string , isBlocked: boolean) : Promise < void>
 }
+
+export interface IUserService {
+  registerUser( name  : string , email : string , password : string , role : UserRole) : Promise<any> ;
+  loginUser(email : string , password : string) : Promise<any>
+}
