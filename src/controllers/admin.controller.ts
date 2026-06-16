@@ -1,8 +1,9 @@
 import { Request, Response } from "express";
 import { AdminService } from "../services/admin.service.js";
+import { IAdminService } from "../interfaces/admin.interface.js";
 
 export class AdminController {
-  constructor(private adminService: AdminService) {}
+  constructor(private adminService: IAdminService) {}
 
   async fetchAll(req: Request, res: Response): Promise<void> {
     try {
